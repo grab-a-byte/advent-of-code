@@ -22,14 +22,15 @@ func (elf *Elf) GetTotalCalories() int {
 	return total
 }
 
-func DayOneSolution() {
+func Solution() {
 	file, err := os.Open("./day_01/input.txt")
 	if err != nil {
 		fmt.Println(err)
 	}
 	lines := utils.ReadFileAsLines(file)
-	fmt.Println(PartOneSolution(lines))
-	fmt.Println(PartTwoSolution(lines))
+	fmt.Println("DAY 1")
+	fmt.Println("Part 1:", PartOneSolution(lines))
+	fmt.Println("Part 2:", PartTwoSolution(lines))
 }
 
 func PartOneSolution(lines []string) int {
