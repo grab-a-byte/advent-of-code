@@ -1,4 +1,4 @@
-package day_04
+package day_05
 
 import (
 	"os"
@@ -7,22 +7,22 @@ import (
 	"github.com/parkeradam/aoc_2022/utils"
 )
 
-func TestDayFour_PartOne(t *testing.T) {
+func TestDayFive_PartOne(t *testing.T) {
 	file, _ := os.Open("./test.txt")
 	lines := utils.ReadFileAsLines(file)
-	result := PartOneSolution(lines)
+	result := PartOneSolution(lines, 3, 3)
 
-	if result != 2 {
+	if result != "CMZ" {
 		t.Error("Incorrect Answer", result)
 	}
 }
 
-func TestDayFour_PartTwo(t *testing.T) {
+func TestDayFive_PartTwo(t *testing.T) {
 	file, _ := os.Open("./test.txt")
 	lines := utils.ReadFileAsLines(file)
-	result := PartTwoSolution(lines)
+	result := PartTwoSolution(lines, 3, 3)
 
-	if result != 4 {
+	if result != "MCD" {
 		t.Error("Incorrect Answer", result)
 	}
 }
