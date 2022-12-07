@@ -13,7 +13,7 @@ func Solution() {
 		fmt.Println(err)
 	}
 	lines := utils.ReadFileAsLines(file)
-	fmt.Println("DAY 5")
+	fmt.Println("DAY 6")
 	fmt.Println("Part 1:", PartOneSolution(lines[0]))
 	fmt.Println("Part 2:", PartTwoSolution(lines[0]))
 }
