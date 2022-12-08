@@ -17,3 +17,12 @@ func Max[T float64 | int](input []T) T {
 	}
 	return output
 }
+
+func Any(check int, items []int, predicate func(int, int) bool) bool {
+	for _, item := range items {
+		if predicate(check, item) {
+			return true
+		}
+	}
+	return false
+}

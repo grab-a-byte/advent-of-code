@@ -8,6 +8,7 @@ import (
 	"github.com/parkeradam/aoc_2022/day_05"
 	"github.com/parkeradam/aoc_2022/day_06"
 	"github.com/parkeradam/aoc_2022/day_07"
+	"github.com/parkeradam/aoc_2022/day_08"
 )
 
 func main() {
@@ -18,4 +19,5 @@ func main() {
 	day_05.Solution()
 	day_06.Solution()
 	day_07.Solution()
+	day_08.Solution()
 }

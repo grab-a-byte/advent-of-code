@@ -46,9 +46,7 @@ func parseDirectories(lines []string) map[string]int {
 	return directorySizes
 }
 
-func PartOneSolution(lines []string) uint64 {
-	directorySizes := parseDirectories(lines)
-
+func getDirectorySizes(directorySizes map[string]int) map[string]int {
 	totalMap := make(map[string]int)
 
 	for key, value := range directorySizes {
@@ -61,6 +59,13 @@ func PartOneSolution(lines []string) uint64 {
 		totalMap[key] = total
 	}
 
+	return totalMap
+}
+
+func PartOneSolution(lines []string) uint64 {
+	directorySizes := parseDirectories(lines)
+	totalMap := getDirectorySizes(directorySizes)
+
 	var finalTotal uint64
 	for _, v := range totalMap {
 		if v < 100_000 {
@@ -72,5 +77,25 @@ func PartOneSolution(lines []string) uint64 {
 }
 
 func PartTwoSolution(lines []string) int {
-	return -1
+	directorySizes := parseDirectories(lines)
+	totalMap := getDirectorySizes(directorySizes)
+
+	fullSpace := 70000000
+	neededSpace := 30000000
+	maxSpace := fullSpace - neededSpace
+
+	usedSpace := 0
+	for _, val := range directorySizes {
+		usedSpace += val
+	}
+
+	amountToBeDeleted := usedSpace - maxSpace
+
+	currentMax := 2147483647
+	for _, val := range totalMap {
+		if val > amountToBeDeleted && val < currentMax {
+			currentMax = val
+		}
+	}
+	return currentMax
 }

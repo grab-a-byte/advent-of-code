@@ -1,4 +1,4 @@
-package day_07
+package day_08
 
 import (
 	"os"
@@ -12,8 +12,8 @@ func TestDaySeven_PartOne(t *testing.T) {
 	lines := utils.ReadFileAsLines(file)
 	result := PartOneSolution(lines)
 
-	if result != 95437 {
-		t.Error("Incorrect Answer", result)
+	if result != 21 {
+		t.Error("Incorrect Answer", result, "Should be", 21)
 	}
 }
 
@@ -22,7 +22,7 @@ func TestDaySeven_PartTwo(t *testing.T) {
 	lines := utils.ReadFileAsLines(file)
 	result := PartTwoSolution(lines)
 
-	if result != 24933642 {
+	if result != -100 {
 		t.Error("Incorrect Answer", result)
 	}
 }
