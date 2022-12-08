@@ -31,6 +31,9 @@ func parseDirectories(lines []string) map[string]int {
 		if strings.HasPrefix(line, "$ cd") {
 			dir := strings.Trim(line[5:], " ")
 			cwd = path.Join(cwd, dir)
+			if directorySizes[cwd] == 0 {
+				directorySizes[cwd] = 0
+			}
 		} else if strings.HasPrefix(line, "$ ls") || strings.HasPrefix(line, "dir") {
 			continue
 		} else {
