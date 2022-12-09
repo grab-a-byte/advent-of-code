@@ -9,6 +9,8 @@ import (
 	"github.com/parkeradam/aoc_2022/utils"
 )
 
+// TODO :- While it works, this can 100% be refactored and optimised. DO IT!
+
 func Solution() {
 	file, err := os.Open("./day_08/input.txt")
 	if err != nil {
@@ -25,49 +27,6 @@ type Tree struct {
 	visible bool
 }
 
-type Item struct {
-	height, posX, posY int
-}
-
-func checkItem(
-	item Item,
-	trees [][]Tree,
-	startX int,
-	startY int,
-	endX int,
-	endY int,
-) bool {
-	visible := true
-	for x := startX; x <= endX; x++ {
-		for y := startY; y <= endY; y++ {
-			tree := trees[x][y]
-			if tree.height >= item.height {
-				visible = false
-			}
-		}
-	}
-
-	return visible
-}
-
-func checkHorizontal(item Item, trees [][]Tree) bool {
-	visibleLeft := checkItem(item, trees, 0, item.posY, item.posX-1, item.posY)
-	visibleRight := checkItem(item, trees, item.posX+1, item.posY, len(trees)-1, item.posY)
-
-	return visibleLeft || visibleRight
-}
-
-func checkVertical(item Item, trees [][]Tree) bool {
-	visibleUp := checkItem(item, trees, item.posX, 0, item.posX+1, item.posY-1)
-	visibleDown := checkItem(item, trees, item.posX, item.posY+1, item.posX, len(trees[0])-1)
-
-	return visibleDown || visibleUp
-}
-
-func check(item Item, trees [][]Tree) bool {
-	return checkHorizontal(item, trees) || checkVertical(item, trees)
-}
-
 func setEdgesVisible(trees [][]Tree) {
 	for x := 0; x < len(trees); x++ {
 		trees[x][0].visible = true
@@ -80,26 +39,87 @@ func setEdgesVisible(trees [][]Tree) {
 	}
 }
 
-func PartOneSolution(lines []string) int {
-	var trees [][]Tree
+func checkUp(trees [][]Tree, posX, posY, height int) bool {
+	for y := 0; y < posY; y++ {
+		treeHeight := trees[posX][y].height
+		if treeHeight >= height {
+			return false
+		}
+	}
+	return true
+}
+
+func checkDown(trees [][]Tree, posX, posY, height int) bool {
+	for y := posY + 1; y < len(trees[0]); y++ {
+		treeHeight := trees[posX][y].height
+		if treeHeight >= height {
+			return false
+		}
+	}
+	return true
+}
+
+func checkLeft(trees [][]Tree, posX, posY, height int) bool {
+	for x := 0; x < posX; x++ {
+		treeHeight := trees[x][posY].height
+		if treeHeight >= height {
+			return false
+		}
+	}
+	return true
+}
+
+func checkRight(trees [][]Tree, posX, posY, height int) bool {
+	for x := posX + 1; x < len(trees); x++ {
+		treeHeight := trees[x][posY].height
+		if treeHeight >= height {
+			return false
+		}
+	}
+	return true
+}
+
+func parseTrees(lines []string) [][]Tree {
+	var trees [][]Tree = make([][]Tree, len(lines))
 
 	for _, line := range lines {
 		items := strings.Split(line, "")
-		lineNums := utils.Map(items, func(s *string) Tree {
-			x, _ := strconv.Atoi(*s)
-			return Tree{height: x}
-		})
-		trees = append(trees, lineNums)
-	}
 
-	for x := 1; x < len(trees)-1; x++ {
-		for y := 1; y < len(trees[0])-1; y++ {
-			isVisible := check(Item{trees[x][y].height, x, y}, trees)
-			trees[x][y].visible = isVisible
+		for x, val := range items {
+			treeHeight, _ := strconv.Atoi(val)
+			trees[x] = append(trees[x], Tree{height: treeHeight})
+		}
+	}
+	return trees
+}
+
+func PartOneSolution(lines []string) int {
+	var trees [][]Tree = make([][]Tree, len(lines))
+
+	for _, line := range lines {
+		items := strings.Split(line, "")
+
+		for x, val := range items {
+			treeHeight, _ := strconv.Atoi(val)
+			trees[x] = append(trees[x], Tree{height: treeHeight})
 		}
 	}
 
 	setEdgesVisible(trees)
+
+	for x := 1; x < len(trees)-1; x++ {
+		for y := 1; y < len(trees[0])-1; y++ {
+			treeHeight := trees[x][y].height
+			leftVisibility := checkLeft(trees, x, y, treeHeight)
+			rightVisibility := checkRight(trees, x, y, treeHeight)
+			upVisibility := checkUp(trees, x, y, treeHeight)
+			downVisibility := checkDown(trees, x, y, treeHeight)
+
+			if leftVisibility || rightVisibility || upVisibility || downVisibility {
+				trees[x][y].visible = true
+			}
+		}
+	}
 
 	total := 0
 
@@ -114,6 +134,79 @@ func PartOneSolution(lines []string) int {
 	return total
 }
 
+///////
+///////
+// PART 2
+///////
+///////
+
+func checkUpCount(trees [][]Tree, posX, posY, height int) int {
+	count := 0
+	for y := posY - 1; y >= 0; y-- {
+		treeHeight := trees[posX][y].height
+		count++
+		if treeHeight >= height {
+			break
+		}
+	}
+	return count
+}
+
+func checkDownCount(trees [][]Tree, posX, posY, height int) int {
+	count := 0
+	for y := posY + 1; y < len(trees[0]); y++ {
+		treeHeight := trees[posX][y].height
+		count++
+		if treeHeight >= height {
+			break
+		}
+	}
+	return count
+}
+
+func checkLeftCount(trees [][]Tree, posX, posY, height int) int {
+	count := 0
+	for x := posX - 1; x >= 0; x-- {
+		treeHeight := trees[x][posY].height
+		count++
+		if treeHeight >= height {
+			break
+		}
+	}
+	return count
+}
+
+func checkRightCount(trees [][]Tree, posX, posY, height int) int {
+	count := 0
+	for x := posX + 1; x < len(trees); x++ {
+		treeHeight := trees[x][posY].height
+		count++
+		if treeHeight >= height {
+			break
+		}
+	}
+	return count
+}
+
 func PartTwoSolution(lines []string) int {
-	return -1
+	trees := parseTrees(lines)
+
+	maxSoFar := 0
+
+	for x := 1; x < len(trees)-1; x++ {
+		for y := 1; y < len(trees[0])-1; y++ {
+			treeHeight := trees[x][y].height
+			leftVisibility := checkLeftCount(trees, x, y, treeHeight)
+			rightVisibility := checkRightCount(trees, x, y, treeHeight)
+			upVisibility := checkUpCount(trees, x, y, treeHeight)
+			downVisibility := checkDownCount(trees, x, y, treeHeight)
+
+			scenicScore := leftVisibility * rightVisibility * upVisibility * downVisibility
+			if scenicScore > maxSoFar {
+				maxSoFar = scenicScore
+			}
+		}
+	}
+
+	return maxSoFar
 }

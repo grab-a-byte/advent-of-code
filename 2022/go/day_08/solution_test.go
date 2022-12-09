@@ -22,7 +22,7 @@ func TestDaySeven_PartTwo(t *testing.T) {
 	lines := utils.ReadFileAsLines(file)
 	result := PartTwoSolution(lines)
 
-	if result != -100 {
+	if result != 8 {
 		t.Error("Incorrect Answer", result)
 	}
 }
