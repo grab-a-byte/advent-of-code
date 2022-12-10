@@ -7,7 +7,7 @@ import (
 	"github.com/parkeradam/aoc_2022/utils"
 )
 
-func TestDaySeven_PartOne(t *testing.T) {
+func TestDayEight_PartOne(t *testing.T) {
 	file, _ := os.Open("./test.txt")
 	lines := utils.ReadFileAsLines(file)
 	result := PartOneSolution(lines)
@@ -17,7 +17,7 @@ func TestDaySeven_PartOne(t *testing.T) {
 	}
 }
 
-func TestDaySeven_PartTwo(t *testing.T) {
+func TestDayEight_PartTwo(t *testing.T) {
 	file, _ := os.Open("./test.txt")
 	lines := utils.ReadFileAsLines(file)
 	result := PartTwoSolution(lines)
