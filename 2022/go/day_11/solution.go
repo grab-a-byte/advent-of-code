@@ -93,7 +93,7 @@ func PartOneSolution(lines []string) int {
 	for round := 0; round < 20; round++ {
 		for i, monkey := range monkeys {
 			for _, item := range monkey.items {
-				inspectedItems[i]++
+				inspectedItems[i] = inspectedItems[i] + 1
 				newWorry := monkey.op(item)
 				newWorry = newWorry / 3
 				if (newWorry % monkey.test) == 0 {
@@ -115,6 +115,57 @@ func PartOneSolution(lines []string) int {
 	return nums[len(nums)-1] * nums[len(nums)-2]
 }
 
+// func getDivisors(monkeys []monkey) int {
+// 	divisors := make(map[int]struct{}, 0)
+// 	var def struct{}
+// 	for _, item := range monkeys {
+// 		divisors[item.test] = def
+// 	}
+
+// 	total := 1
+// 	for k := range divisors {
+// 		total *= k
+// 	}
+
+// 	return total
+// }
+
 func PartTwoSolution(lines []string) int {
 	return -1
+	// monkeys := parseMonkeys(lines)
+	// divisor := getDivisors(monkeys)
+
+	// inspectedItems := make(map[int]int, len(monkeys))
+
+	// for round := 0; round < 10_000; round++ {
+	// 	for i, monkey := range monkeys {
+	// 		for _, item := range monkey.items {
+	// 			inspectedItems[i] = inspectedItems[i] + 1
+	// 			newWorry := item % divisor
+	// 			newWorry %= monkey.test
+	// 			if newWorry == 0 {
+	// 				monkeys[monkey.trueMonkey].items = append(monkeys[monkey.trueMonkey].items, item)
+	// 			} else {
+	// 				monkeys[monkey.falseMonkey].items = append(monkeys[monkey.falseMonkey].items, item)
+	// 			}
+	// 		}
+	// 		monkeys[i].items = make([]int, 0)
+	// 	}
+
+	// 	// if round == 0 || round == 19 || round == 999 || round == 1999 || round == 2999 || round == 3999 {
+	// 	var nums []int
+	// 	for _, v := range inspectedItems {
+	// 		nums = append(nums, v)
+	// 	}
+	// 	fmt.Println(round, nums)
+	// 	// }
+	// }
+
+	// var nums []int
+	// for _, v := range inspectedItems {
+	// 	nums = append(nums, v)
+	// }
+
+	// sort.Ints(nums)
+	// return nums[len(nums)-1] * nums[len(nums)-2]
 }
