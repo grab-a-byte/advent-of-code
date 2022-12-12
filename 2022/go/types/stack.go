@@ -1,18 +1,19 @@
 package types
 
-type Stack []string
+type Stack[T any] []T
 
-func (s *Stack) IsEmpty() bool {
+func (s *Stack[T]) IsEmpty() bool {
 	return len(*s) == 0
 }
 
-func (s *Stack) Push(str string) {
-	*s = append(*s, str)
+func (s *Stack[T]) Push(item T) {
+	*s = append(*s, item)
 }
 
-func (s *Stack) Pop() (string, bool) {
+func (s *Stack[T]) Pop() (T, bool) {
 	if s.IsEmpty() {
-		return "", false
+		var result T
+		return result, false
 	} else {
 		index := len(*s) - 1
 		element := (*s)[index]

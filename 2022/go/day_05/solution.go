@@ -19,8 +19,8 @@ func Solution() {
 	fmt.Println("Part 2:", PartTwoSolution(lines, 9, 8))
 }
 
-func parseStacks(length, height int, stackLines []string) []*types.Stack {
-	var stacks []*types.Stack
+func parseStacks(length, height int, stackLines []string) []*types.Stack[string] {
+	var stacks []*types.Stack[string]
 
 	var parsed [][]string
 	for i := 0; i < length; i++ {
@@ -34,7 +34,7 @@ func parseStacks(length, height int, stackLines []string) []*types.Stack {
 	}
 
 	for i := 0; i < length; i++ {
-		var stack types.Stack
+		var stack types.Stack[string]
 		item := parsed[i]
 		for i := len(item) - 1; i >= 0; i-- {
 			char := item[i]
