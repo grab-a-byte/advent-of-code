@@ -12,12 +12,12 @@ import (
 )
 
 func Solution() {
-	file, err := os.Open("./day_12/input.txt")
+	file, err := os.Open("./day_15/input.txt")
 	if err != nil {
 		fmt.Println(err)
 	}
 	lines := utils.ReadFileAsLines(file)
-	fmt.Println("DAY 12")
+	fmt.Println("DAY 15")
 	fmt.Println("Part 1:", PartOneSolution(lines, 2_000_000))
 	fmt.Println("Part 2:", PartTwoSolution(lines))
 }
@@ -62,18 +62,35 @@ func manhattanDistance(a, b point) int64 {
 	return int64(x + y)
 }
 
-func getPointsInDistance(b beacon, s sensor) []point {
+func getPointsInDistance(b beacon, s sensor, yCheck int64) []point {
 	var points []point
 
 	distance := manhattanDistance(point(b), point(s))
-	for x := s.xPos - distance; x < s.xPos+distance; x++ {
-		for y := s.yPos - distance; y < s.yPos+distance; y++ {
-			pointDistance := manhattanDistance(point(s), point{x, y})
-			if pointDistance <= distance {
-				points = append(points, point{x, y})
-			}
-		}
+
+	if s.yPos+distance < yCheck && s.yPos-distance > yCheck {
+		return make([]point, 0)
 	}
+
+	for i := int64(0); i <= distance*2; i++ {
+
+		currentY := s.yPos - distance + i
+		if currentY != yCheck {
+			continue
+		}
+
+		xAdd := int64(0)
+		if i > distance {
+			xAdd = (distance * 2) - i
+		} else {
+			xAdd = i
+		}
+
+		for x := s.xPos - xAdd; x <= s.xPos+xAdd; x++ {
+			points = append(points, point{x, currentY})
+		}
+
+	}
+
 	return points
 }
 
@@ -100,7 +117,7 @@ func PartOneSolution(lines []string, yCheck int) int {
 	for _, p := range pairs {
 		go func(pair beaconSensorPair) {
 			defer wg.Done()
-			points := getPointsInDistance(pair.beacon, pair.sensor)
+			points := getPointsInDistance(pair.beacon, pair.sensor, int64(yCheck))
 			for _, point := range points {
 				c <- point
 			}
@@ -108,6 +125,7 @@ func PartOneSolution(lines []string, yCheck int) int {
 	}
 
 	for p := range c {
+		// fmt.Println(p)
 		set[p] = instance
 	}
 

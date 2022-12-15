@@ -13,7 +13,7 @@ func TestDayFifteen_PartOne(t *testing.T) {
 	result := PartOneSolution(lines, 10)
 
 	if result != 26 {
-		t.Error("Incorrect Answer", result, "Should be", 31)
+		t.Error("Incorrect Answer", result, "Should be", 26)
 	}
 }
 
@@ -24,5 +24,12 @@ func TestDayFifteen_PartTwo(t *testing.T) {
 
 	if result != 29 {
 		t.Error("Incorrect Answer", result)
+	}
+}
+
+func TestGetPointInDistance(t *testing.T) {
+	p := getPointsInDistance(beacon{xPos: 3, yPos: 7}, sensor{xPos: 5, yPos: 10}, 100)
+	if len(p) != 61 {
+		t.Error()
 	}
 }
