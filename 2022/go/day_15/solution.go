@@ -100,7 +100,6 @@ var instance void
 
 func PartOneSolution(lines []string, yCheck int) int {
 	pairs := utils.Map(lines, parseLine)
-	fmt.Println(pairs)
 
 	set := make(map[point]void)
 
@@ -125,7 +124,6 @@ func PartOneSolution(lines []string, yCheck int) int {
 	}
 
 	for p := range c {
-		// fmt.Println(p)
 		set[p] = instance
 	}
 
