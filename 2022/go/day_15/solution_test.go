@@ -20,9 +20,9 @@ func TestDayFifteen_PartOne(t *testing.T) {
 func TestDayFifteen_PartTwo(t *testing.T) {
 	file, _ := os.Open("./test.txt")
 	lines := utils.ReadFileAsLines(file)
-	result := PartTwoSolution(lines)
+	result := PartTwoSolution(lines, 0, 20)
 
-	if result != 29 {
+	if result != 56000011 {
 		t.Error("Incorrect Answer", result)
 	}
 }
