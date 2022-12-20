@@ -98,9 +98,9 @@ abstract class DayEighteen {
 
     while (queue.isNotEmpty) {
       var item = queue.removeFirst();
-      visitedNodes.add(item);
-      print(visitedNodes);
       print("Processing Item from Queue $item");
+      visitedNodes.add(item);
+      print("VisitedNodes = $visitedNodes");
       if ((item[0] < minVal[0] || item[0] > maxVal[0]) ||
           (item[1] < minVal[1] || item[1] > maxVal[1]) ||
           (item[2] < minVal[2] || item[2] > maxVal[2])) {
