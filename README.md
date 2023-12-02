@@ -17,3 +17,6 @@ Please be aware these were made secondary and are not as well structured. I will
 
 ## Go
 You can download the golang SDK from [the golang website](https://go.dev/). The folder contains a main.go file which will run all sub-days and there are tests for each daybased on the examples. When in the folder with main.go, you can run he command `go run main.go` to run the project. I have written these using VS Code and so setup is for that, apologies if you use goland or another IDE
+
+## Editors
+Helix - In 2023 i used the helix editor to try and learn something new, while slowing me down i'm using it as a experience to learn a new editor instead of a new language this year.
