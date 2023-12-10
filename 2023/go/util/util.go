@@ -3,6 +3,8 @@ package util
 import (
 	"bufio"
 	"os"
+	"strconv"
+	"strings"
 )
 
 func ReadFileAsLines(file *os.File) []string {
@@ -28,4 +30,16 @@ func readln(r *bufio.Reader) (string, error) {
 		ln = append(ln, line...)
 	}
 	return string(ln), err
+}
+
+func StrToIntsSpace(s string) []int {
+	values := strings.Split(s, " ")
+	output := make([]int, len(values))
+
+	for i, v := range values {
+		//Intentially ignor error, should wqork panic fine if not true
+		val, _ := strconv.Atoi(v)
+		output[i] = val
+	}
+	return output
 }

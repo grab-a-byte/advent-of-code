@@ -1,6 +1,8 @@
 package main
 
-import "aoc/day_08"
+import "aoc/day_09"
+
+// import "aoc/day_08"
 
 // import "aoc/day_07"
 
@@ -17,5 +19,6 @@ func main() {
 	// day_05.Solution()
 	// day_06.Solution()
 	// day_07.Solution()
-	day_08.Solution()
+	// day_08.Solution()
+	day_09.Solution()
 }
