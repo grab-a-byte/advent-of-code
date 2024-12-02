@@ -11,17 +11,9 @@ void solution() {
 }
 
 int partOneSolution(String input) {
-  List<int> left = List.empty(growable: true);
-  List<int> right = List.empty(growable: true);
-  var lines = LineSplitter().convert(input);
-
-  for (var line in lines) {
-    final parts = line.split("   ");
-    final leftNum = int.parse(parts[0]);
-    final rightNum = int.parse(parts[1]);
-    left.add(leftNum);
-    right.add(rightNum);
-  }
+  var lines = LineSplitter().convert(input).map((l) => l.split("   "));
+  var left = lines.map((p) => int.parse(p[0])).toList();
+  var right = lines.map((p) => int.parse(p[1])).toList();
 
   left.sort();
   right.sort();
@@ -35,17 +27,9 @@ int partOneSolution(String input) {
 }
 
 int partTwoSolution(String input) {
-  List<int> left = List.empty(growable: true);
-  List<int> right = List.empty(growable: true);
-  var lines = LineSplitter().convert(input);
-
-  for (var line in lines) {
-    final parts = line.split("   ");
-    final leftNum = int.parse(parts[0]);
-    final rightNum = int.parse(parts[1]);
-    left.add(leftNum);
-    right.add(rightNum);
-  }
+  var lines = LineSplitter().convert(input).map((l) => l.split("   "));
+  var left = lines.map((p) => int.parse(p[0])).toList();
+  var right = lines.map((p) => int.parse(p[1])).toList();
 
   Map<int,int> counts = {};
   for(var val in right){

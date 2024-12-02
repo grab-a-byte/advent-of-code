@@ -42,18 +42,12 @@ func partTwoSolution(input string) int64 {
 	arr1, arr2 := getArrays(input)
 	counts := map[int]int{}
 	for _, num := range arr2 {
-		if _, ok := counts[num]; !ok {
-			counts[num] = 1
-		} else {
-			counts[num] += 1
-		}
+		counts[num]++
 	}
 
 	var total int64 = 0
 	for _, value := range arr1 {
-		if val, ok := counts[value]; ok || val != 0 {
-			total += int64(val * value)
-		}
+		total += int64(counts[value] * value)
 	}
 
 	return total
