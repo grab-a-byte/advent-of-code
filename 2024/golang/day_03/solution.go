@@ -71,7 +71,6 @@ type Pairing struct {
 	First, Second int
 }
 
-// Work In Progress
 func partTwoSolution(input string) int64 {
 	pairings := []Pairing{}
 	var position int = 0
