@@ -15,8 +15,8 @@ func Solution() {
 	strContent := string(content)
 	answer1 := partOneSolution(strContent)
 	fmt.Printf("Day 4 - Part 1: %d \n", answer1)
-	// answer2 := partTwoSolution(strContent)
-	// fmt.Printf("Day 4 - Part 2: %d \n", answer2)
+	answer2 := partTwoSolution(strContent)
+	fmt.Printf("Day 4 - Part 2: %d \n", answer2)
 }
 
 func partOneSolution(input string) int64 {
@@ -124,7 +124,30 @@ func getRows(input []string, length int) []string {
 	return rows
 }
 
-//Part 2 not done
-// func partTwoSolution(input string) int64 {
-// 	return 42
-// }
+func partTwoSolution(input string) int64 {
+	var result int = 0
+	sanatizedInput := strings.ReplaceAll(input, "\r\n", "\n")
+	rawRows := strings.Split(sanatizedInput, "\n")
+	for x := 1; x < len(rawRows[0])-1; x++ {
+		for y := 1; y < len(rawRows)-1; y++ {
+			if rawRows[y][x] != 'A' {
+				continue
+			}
+			cross := []byte{
+				rawRows[y-1][x-1],
+				rawRows[y+1][x-1],
+				rawRows[y+1][x+1],
+				rawRows[y-1][x+1],
+			}
+			crossStr := string(cross)
+			ms := strings.Count(crossStr, "M")
+			ss := strings.Count(crossStr, "S")
+			if ms == 2 && ss == 2 {
+				result++
+			}
+		}
+	}
+
+	//1962 //Too High
+	return int64(result)
+}

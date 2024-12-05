@@ -22,12 +22,11 @@ func Test_DayFour_PartOne(t *testing.T) {
 	}
 }
 
-//Part 2 not done
-// func Test_DayFour_PartTwo(t *testing.T) {
-// 	output := partTwoSolution(testInput)
-// 	var expected int64 = 48
+func Test_DayFour_PartTwo(t *testing.T) {
+	output := partTwoSolution(testInput)
+	var expected int64 = 9
 
-// 	if output != expected {
-// 		t.Errorf("expected %d got %d", expected, output)
-// 	}
-// }
+	if output != expected {
+		t.Errorf("expected %d got %d", expected, output)
+	}
+}
