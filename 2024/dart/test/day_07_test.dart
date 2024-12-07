@@ -100,7 +100,7 @@ bool _listEquals<E>(List<E>? list1, List<E>? list2) {
   var length = list1.length;
   if (length != list2.length) return false;
   for (var i = 0; i < length; i++) {
-    if (list1[i] == list2[i]) return false;
+    if (list1[i] != list2[i]) return false;
   }
   return true;
 }
