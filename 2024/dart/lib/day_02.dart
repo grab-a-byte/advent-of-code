@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dart/iterable_extensions.dart';
+
 void solution() {
   var file = File("inputs/day_02.txt");
   var input = file.readAsStringSync();
@@ -30,7 +32,7 @@ int partTwoSolution(String input) {
   return safeLines.length + fixedLines;
 }
 
-bool isSafe(Iterable<int> row) => row.getSliding(2).every((x) {
+bool isSafe(Iterable<int> row) => row.sliding(2).every((x) {
       final num = x.first - x.last;
       final rowIsNegative = (row.first - row.skip(1).first) < 0;
       return num.abs() < 4 &&
@@ -39,12 +41,6 @@ bool isSafe(Iterable<int> row) => row.getSliding(2).every((x) {
     });
 
 extension Sliding<T> on Iterable<T> {
-  Iterable<Iterable<T>> getSliding(int window) sync* {
-    for (int i = 0; i < length - (window - 1); i++) {
-      yield skip(i).take(window);
-    }
-  }
-
   Iterable<Iterable<T>> removeOne() sync* {
     final list = toList();
     for (int i = 0; i < length; i++) {
