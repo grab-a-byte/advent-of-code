@@ -1,17 +1,29 @@
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
-void solution(){
+void solution() {
   var file = File("inputs/day_12.txt");
   var input = file.readAsStringSync();
   var res1 = partOneSolution(input);
   print("Day 12 - Part 1 : $res1");
-  // var res2 = partTwoSolution(input);
-  // print("Day 11 - Part 2 : $res2");
+  var res2 = partTwoSolution(input);
+  print("Day 11 - Part 2 : $res2");
 }
 
 int partOneSolution(String input) {
+  final regions = getRegions(input);
+  return regions.map((x) => x.cost()).reduce((a, b) => a + b);
+}
+
+//TODO:- Can calculate sides in Region class and use same as above
+//        with sides instead of cost() (though cost needs changing)
+int partTwoSolution(String input) {
+  final regions = getRegions(input);
+  return 42;
+}
+
+
+List<_Region> getRegions(String input) {
   List<_Position> positions = [];
   var lines = LineSplitter().convert(input);
   for (int x = 0; x < lines[0].length; x++) {
@@ -19,7 +31,6 @@ int partOneSolution(String input) {
       positions.add(_Position(x, y, lines[y][x]));
     }
   }
-  print(positions.length);
 
   List<_Region> regions = [];
 
@@ -28,18 +39,26 @@ int partOneSolution(String input) {
     if (start.checked) continue;
     start.checked = true;
     List<_Position> regionPositions = [];
-    var toCheck = Queue<_Position>.from([start]);
+    var toCheck = <_Position>{start};
     while (toCheck.isNotEmpty) {
-      final checking = toCheck.removeFirst();
+      if (toCheck.length > positions.length) {
+        print("FASDFASFWEGASGASDFGSD");
+        print(toCheck.length);
+      }
+      final checking = toCheck.first;
+      toCheck = toCheck.skip(1).toSet();
       checking.checked = true;
       regionPositions.add(checking);
-      final toAdd = positions.where((p) => p.isAdjacent(checking) && p.value == checking.value && !p.checked).toList();
+      final toAdd = positions
+          .where((p) =>
+              p.isAdjacent(checking) && p.value == checking.value && !p.checked)
+          .toList();
       toCheck.addAll(toAdd);
     }
     regions.add(_Region(regionPositions));
   }
 
-  return regions.map((x) => x.cost()).reduce((a, b) => a + b);
+  return regions;
 }
 
 class _Position {
