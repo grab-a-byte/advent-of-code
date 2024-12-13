@@ -5,6 +5,7 @@ import 'package:dart/day_09.dart' as day_09;
 import 'package:dart/day_10.dart' as day_10;
 import 'package:dart/day_11.dart' as day_11;
 import 'package:dart/day_12.dart' as day_12;
+import 'package:dart/day_13.dart' as day_13;
 
 void main(List<String> arguments) {
   // day_01.solution();
@@ -13,6 +14,7 @@ void main(List<String> arguments) {
   // day_09.solution();
   //day_10.solution();
   // day_11.solution();
-  day_12.solution();
+  // day_12.solution();
+  day_13.solution();
 
 }
