@@ -133,16 +133,11 @@ func partTwoSolution(input string) int64 {
 			if rawRows[y][x] != 'A' {
 				continue
 			}
-			cross := []byte{
-				rawRows[y-1][x-1],
-				rawRows[y+1][x-1],
-				rawRows[y+1][x+1],
-				rawRows[y-1][x+1],
-			}
-			crossStr := string(cross)
-			ms := strings.Count(crossStr, "M")
-			ss := strings.Count(crossStr, "S")
-			if ms == 2 && ss == 2 {
+			topLeftMas := rawRows[y-1][x-1] == 'M' && rawRows[y+1][x+1] == 'S'
+			topLeftSam := rawRows[y-1][x-1] == 'S' && rawRows[y+1][x+1] == 'M'
+			topRightMas := rawRows[y-1][x+1] == 'M' && rawRows[y+1][x-1] == 'S'
+			topRightSam := rawRows[y-1][x+1] == 'S' && rawRows[y+1][x-1] == 'M'
+			if (topLeftMas || topLeftSam) && (topRightMas || topRightSam) {
 				result++
 			}
 		}
