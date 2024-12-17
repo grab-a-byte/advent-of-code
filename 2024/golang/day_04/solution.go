@@ -143,6 +143,5 @@ func partTwoSolution(input string) int64 {
 		}
 	}
 
-	//1962 //Too High
 	return int64(result)
 }
