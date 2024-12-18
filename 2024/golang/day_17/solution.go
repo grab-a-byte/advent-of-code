@@ -17,8 +17,8 @@ func Solution() {
 	strContent := string(content)
 	answer1 := partOneSolution(strContent)
 	fmt.Printf("Day 17 - Part 1: %s \n", answer1)
-	answer2 := partTwoSolution(strContent)
-	fmt.Printf("Day 17 - Part 2: %s \n", answer2)
+	// answer2 := partTwoSolution(strContent)
+	// fmt.Printf("Day 17 - Part 2: %s \n", answer2)
 }
 
 func partOneSolution(input string) string {
@@ -46,11 +46,11 @@ func partOneSolution(input string) string {
 
 	machine.run()
 	var values []string
-	for _, i := range []int{1, 2, 3, 4} {
+	for _, i := range machine.output {
 		values = append(values, strconv.Itoa(i))
 	}
 
-	return strings.Join(values, ", ")
+	return strings.Join(values, ",")
 }
 
 func partTwoSolution(input string) string {
@@ -71,7 +71,7 @@ func (m *machine) run() {
 }
 
 func (m *machine) step() {
-	ins := m.program[m.ip]
+	ins := m.currIns()
 	m.ip++
 	switch ins {
 	case 0:
@@ -80,7 +80,7 @@ func (m *machine) step() {
 		m.a = m.a / div
 		m.ip++
 	case 1:
-		m.b = m.b ^ m.getOperand()
+		m.b = m.b ^ m.program[m.ip] //Literal operand
 		m.ip++
 	case 2:
 		m.b = m.getOperand() % 8
@@ -97,6 +97,7 @@ func (m *machine) step() {
 	case 5:
 		val := m.getOperand() % 8
 		m.output = append(m.output, val)
+		m.ip++
 	case 6:
 		operand := m.getOperand()
 		m.b = m.a / (2 ^ operand)
