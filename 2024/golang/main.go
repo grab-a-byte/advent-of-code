@@ -9,6 +9,6 @@ func main() {
 	// day_02.Solution()
 	// day_03.Solution()
 	// day_04.Solution()
-	// day_14.Solution()
+	// // day_14.Solution() //Double commented, do not run, creates an army of images
 	day_17.Solution()
 }

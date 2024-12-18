@@ -17,8 +17,8 @@ func Solution() {
 	strContent := string(content)
 	answer1 := partOneSolution(strContent)
 	fmt.Printf("Day 17 - Part 1: %s \n", answer1)
-	// answer2 := partTwoSolution(strContent)
-	// fmt.Printf("Day 17 - Part 2: %s \n", answer2)
+	answer2 := partTwoSolution(strContent)
+	fmt.Printf("Day 17 - Part 2: %d \n", answer2)
 }
 
 func partOneSolution(input string) string {
@@ -53,8 +53,42 @@ func partOneSolution(input string) string {
 	return strings.Join(values, ",")
 }
 
-func partTwoSolution(input string) string {
-	return ""
+func partTwoSolution(input string) int {
+	sanatixedInput := strings.ReplaceAll(input, "\r", "")
+	parts := strings.Split(sanatixedInput, "\n")[4]
+	programStr := strings.Split(strings.TrimLeft(parts, "Program: "), ",")
+	program := make([]int, len(programStr))
+	for i, s := range programStr {
+		num, _ := strconv.Atoi(s)
+		program[i] = num
+	}
+	i := 0
+	for {
+		fmt.Println("processing" + string(i))
+		m := machine{
+			a:       i,
+			program: program,
+		}
+
+		m.run()
+		if testEq(m.output, m.program) {
+			return i
+		}
+	}
+
+	panic("No number found")
+}
+
+func testEq(a, b []int) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
 }
 
 type machine struct {
@@ -90,7 +124,7 @@ func (m *machine) step() {
 			m.ip++
 			break
 		}
-		m.ip = m.getOperand()
+		m.ip = m.program[m.ip]
 	case 4:
 		m.b = m.b ^ m.c
 		m.ip++
@@ -100,11 +134,13 @@ func (m *machine) step() {
 		m.ip++
 	case 6:
 		operand := m.getOperand()
-		m.b = m.a / (2 ^ operand)
+		div := int(math.Pow(2, float64(operand)))
+		m.b = m.a / div
 		m.ip++
 	case 7:
 		operand := m.getOperand()
-		m.c = m.a / (2 ^ operand)
+		div := int(math.Pow(2, float64(operand)))
+		m.c = m.a / div
 		m.ip++
 	}
 }

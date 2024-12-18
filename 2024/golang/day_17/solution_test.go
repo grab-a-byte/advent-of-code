@@ -71,21 +71,9 @@ func Test_Machine_Run(t *testing.T) {
 
 func Test_DayFourteen_PartTwo(t *testing.T) {
 	output := partTwoSolution(testInput)
-	var expected string = "UNKNOWN"
+	var expected int = 117440
 
-	if output != expected {
-		t.Errorf("expected %s got %s", expected, output)
+	if output != 0 {
+		t.Errorf("expected %d got %d", expected, output)
 	}
-}
-
-func testEq(a, b []int) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for i := range a {
-		if a[i] != b[i] {
-			return false
-		}
-	}
-	return true
 }
