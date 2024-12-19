@@ -1,4 +1,5 @@
 
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
@@ -28,31 +29,43 @@ int partTwoSolution(String input){
   final patterns = lines[0].split(", ").map((e) => e.trim()).toList();
   final designs = lines.skip(2).toList();
 
-  final chars = patterns.expand((x) => x.split("")).toSet();
-  final useableDesigns = designs.where((x) => x.split("").toSet().difference(chars).isEmpty).toList();
-
-  final makeableDesigns = getMakeableDesigns(useableDesigns, patterns);
-  int total = 0;
-  for(var design in makeableDesigns){
-    total += howManyWays(design, "", patterns);
-  }
-
-  return total;
+  return designs.map((d) => getPermutationsCount(d, patterns)).fold(0, (a,b) => a + b);
 }
 
-int howManyWays(String design, String current, List<String> patterns){
-  var newDesign = design.split("").skip(current.length).join();
-  final usablePatterns = patterns.where(newDesign.startsWith);
-  var total = 0;
-  for (var pattern in usablePatterns.toSet()){
-    if(current + pattern == design){
-      total++;
+int getPermutationsCount(String design, List<String> patterns){
+  //Coudl maybe get rid of Queue and jsut use map directly
+  int result = 0;
+  Queue<(String, int)> queue = Queue.from([("", 1)]);
+  while(queue.isNotEmpty){
+    final (pattern, score) = queue.removeFirst();
+    if(pattern == design){
+      result += score;
       continue;
     }
-    total += usablePatterns.where((x) => x == pattern).length * (howManyWays(design, current+pattern, patterns));
+
+    final candidates = patterns.map((p) => pattern + p)
+      .where((p) => design.startsWith(p));
+
+    for(final candidate in candidates){
+      queue.add((candidate, score));
+    }
+
+    if(queue.length > 50){
+      Map<String, int> comp = {};
+      for(var q in queue){
+        if(comp.containsKey(q.$1)){
+          comp[q.$1] = comp[q.$1]! + q.$2;
+        } else {
+          comp[q.$1] = q.$2;
+        }
+      }
+      List<(String, int)> newQueue = [];
+      comp.forEach((s, i) => newQueue.add((s,i)));
+      queue = Queue.from(newQueue);
+    }
   }
 
-  return total;
+  return result;
 }
 
 List<String> getMakeableDesigns(List<String> designs, List<String> patterns){
