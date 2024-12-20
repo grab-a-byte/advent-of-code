@@ -29,43 +29,21 @@ int partTwoSolution(String input){
   final patterns = lines[0].split(", ").map((e) => e.trim()).toList();
   final designs = lines.skip(2).toList();
 
-  return designs.map((d) => getPermutationsCount(d, patterns)).fold(0, (a,b) => a + b);
+  return designs.map((d) => getPermutationsCount(d, patterns, {})).fold(0, (a,b) => a + b);
 }
 
-int getPermutationsCount(String design, List<String> patterns){
-  //Coudl maybe get rid of Queue and jsut use map directly
-  int result = 0;
-  Queue<(String, int)> queue = Queue.from([("", 1)]);
-  while(queue.isNotEmpty){
-    final (pattern, score) = queue.removeFirst();
-    if(pattern == design){
-      result += score;
-      continue;
-    }
-
-    final candidates = patterns.map((p) => pattern + p)
-      .where((p) => design.startsWith(p));
-
-    for(final candidate in candidates){
-      queue.add((candidate, score));
-    }
-
-    if(queue.length > 50){
-      Map<String, int> comp = {};
-      for(var q in queue){
-        if(comp.containsKey(q.$1)){
-          comp[q.$1] = comp[q.$1]! + q.$2;
-        } else {
-          comp[q.$1] = q.$2;
-        }
-      }
-      List<(String, int)> newQueue = [];
-      comp.forEach((s, i) => newQueue.add((s,i)));
-      queue = Queue.from(newQueue);
+int getPermutationsCount(String design, List<String> patterns, Map<String, int> cache){
+  if(cache.containsKey(design)) return cache[design]!;
+  var count = 0;
+  for(final pattern in patterns){
+    if(pattern == design) {
+      count++;
+    } else if (design.startsWith(pattern)){
+      count += getPermutationsCount(design.substring(pattern.length), patterns, cache);
     }
   }
-
-  return result;
+  cache[design] = count;
+  return count;
 }
 
 List<String> getMakeableDesigns(List<String> designs, List<String> patterns){
