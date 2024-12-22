@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -82,28 +83,44 @@ int partTwoSolution(String input) {
       .map((x) => x.sliding(2).map((s) => s.elementAt(1) - s.first).toList())
       .toList();
 
-  List<int> totals = [];
+  List<LinkedHashMap<List<int>, int>> parts = List.generate(
+      changes.length,
+      (_) => LinkedHashMap(
+            equals: (p0, p1) => p0.isEqual(p1),
+          ));
+
   for (int i = 0; i < changes.length; i++) {
     final windows = changes[i].sliding(4);
     for (final window in windows) {
-      var total = 0;
-      for (int i = 0; i < changes.length; i++) {
-        final pos = changes[i].sliding(4).indexed.firstWhere(
-              (iter) => window.isEqual(iter.$2),
-              orElse: () => (-1, []),
-            );
-        if (pos.$1 == -1) continue;
-        // print(prices[i][pos.$1 + 4]);
-        total = total + prices[i][pos.$1 + 4];
-      }
-      // print("END");
-      totals.add(total);
+      if (parts[i].containsKey(window.toList())) continue;
+      final pos = changes[i].sliding(4).indexed.firstWhere(
+            (iter) => window.isEqual(iter.$2),
+            orElse: () => (-1, []),
+          );
+      if (pos.$1 == -1) continue;
+      parts[i][window.toList()] = prices[i][pos.$1 + 4];
     }
-
   }
 
-  return totals.reduce(max);
+  LinkedHashMap<List<int>, int> totals = LinkedHashMap(
+    equals: (p0, p1) => p0.isEqual(p1),
+  );
+  for (var map in parts) {
+    for (var kv in [
+      [-2, 1, 2, -3]
+    ]) {
+      //If kv exists, skip
+      if (totals.containsKey(kv)) continue;
+      var total = parts.map((x) => x[kv] ?? 0).reduce((a, b) => a + b);
+      totals[kv] = total;
+    }
+  }
+
+//find highest in values
+  return totals.values.reduce(max);
+  return 42;
 }
+// total = total + prices[i][pos.$1 + 4];
 
 extension IntExensions on int {
   int prune() => this % 16777216;

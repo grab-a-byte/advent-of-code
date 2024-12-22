@@ -1,6 +1,6 @@
 
 import 'package:test/test.dart';
-import 'package:dart/day_21.dart' as day_21;
+import 'package:dart/day_22.dart' as day_22;
 
 
 const testInput = """1
@@ -10,12 +10,12 @@ const testInput = """1
 
 void main(){
   test("Day 21- Part 1", (){
-    var res = day_21.partOneSolution(testInput);
+    var res = day_22.partOneSolution(testInput);
     expect(res, 37327623);
   });
 
   test("Day 21- Part 2", (){
-    var res = day_21.partTwoSolution("""1
+    var res = day_22.partTwoSolution("""1
 2
 3
 2024""");
