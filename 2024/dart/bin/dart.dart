@@ -8,7 +8,8 @@
 // import 'package:dart/day_13.dart' as day_13;
 // import 'package:dart/day_18.dart' as day_18;
 // import 'package:dart/day_19.dart' as day_19;
-import 'package:dart/day_20.dart' as day_20;
+// import 'package:dart/day_20.dart' as day_20;
+import 'package:dart/day_21.dart' as day_21;
 
 void main(List<String> arguments) {
   // day_01.solution();
@@ -21,5 +22,6 @@ void main(List<String> arguments) {
   // day_13.solution();
   // day_18.solution();
   // day_19.solution();
-  day_20.solution();
+  // day_20.solution();
+  day_21.solution();
 }
