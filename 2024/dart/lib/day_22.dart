@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'package:dart/iterable_extensions.dart';
+
 void solution() {
   var file = File("inputs/day_22.txt");
   var input = file.readAsStringSync();
@@ -10,6 +11,7 @@ void solution() {
   var res2 = partTwoSolution(input);
   print("Day 22 - Part 2 : $res2");
 }
+
 int partOneSolution(String input) {
   final lines =
       LineSplitter().convert(input).map((x) => int.parse(x.trim())).toList();
