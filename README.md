@@ -1,6 +1,8 @@
 # advent-of-code
 Advent Of Code solutions
 
+_Please be aware the history of this repo was removed in order to remove inputs, recreated from an older repository hence having years prior to the creation date of the repository_
+
 # Folder Structure
 All solutions are in the folder structure Year/Language/Day.
 
