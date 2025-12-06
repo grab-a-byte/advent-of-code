@@ -3,6 +3,7 @@ use std::fs;
 pub mod day_01;
 pub mod day_02;
 pub mod day_03;
+pub mod day_04;
 pub mod day_05;
 
 fn main() {
@@ -24,6 +25,12 @@ fn main() {
     // let answer3_2 = day_03::day_three_part_two(input3.as_str());
     // println!("{}", answer3);
     // println!("{}", answer3_2);
+    //
+    let input4 = fs::read_to_string("./inputs/day_04.txt").unwrap();
+    let answer4 = day_04::day_four_part_one(input4.as_str());
+    let answer4_2 = day_04::day_four_part_two(input4.as_str());
+    println!("{}", answer4);
+    println!("{}", answer4_2);
     //
     // let input5 = fs::read_to_string("./inputs/day_05.txt").unwrap();
     // let answer5 = day_05::day_five_part_one(input5.as_str());
